@@ -1,21 +1,35 @@
 # Retail Sales & Customer Analytics with PostgreSQL
 
+![Project Cover](file_000000004d3c820e83f8260a70f1287d.png)
+
 ##  Project Overview  
 
 **Project Title:** Retail Sales & Customer Analytics  
 **Database:** `retail_analytics_p1`
 
-This project demonstrates the Retail Sales and Customer Analytics using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase skills in database design, manipulation, and querying.
+This project focuses on analysing sales and customer data using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase skills in database design, data manipulation, and SQL querying.
 
-![Project Cover](file_000000004d3c820e83f8260a70f1287d.png)
+## Technologies
 
+- PostgreSQL
+- SQL
+- pgAdmin
+- Git
+- GitHub
+
+## Dataset
+
+The data for this project is sourced from Kaggle dataset:
+
+- Dataset Link: [](https://www.kaggle.com/datasets/hyerdrac/retail-data)
+  
 ## Objectives
 
-1. Create and structure the PostgreSQL database: Design the tables, Define the appropiate data types, primary keys, and foreign key relationships.
-2. Data Exploration & Quality checks: Explore the data and inspect the data quality to see if there is any data to clean.
-3. Data Cleaning: Perform a detailed data cleaning for any data quality issue found.
-4. Validate the database and cleaned data: Verify the relationships, data consistency, and the results of the cleaning process.
-5. Perform SQL-based business analysis: Use queries, joins, aggregations, subqueries, CTEs, and window functions to answer business questions and generate insights.
+- Create and structure the PostgreSQL database: Design the tables, Define the appropiate data types, primary keys, and foreign key relationships.
+- Data Exploration & Quality checks: Explore the data and inspect the data quality to see if there is any data to clean.
+- Data Cleaning: Perform a detailed data cleaning for any data quality issue found.
+- Validate the database and cleaned data: Verify the relationships, data consistency, and the results of the cleaning process.
+- Perform SQL-based business analysis: Use queries, joins, aggregations, subqueries, CTEs, and window functions to answer business questions and generate insights.
 
 ## Project Structure
 
@@ -318,7 +332,7 @@ WHERE
 
 ### 5. Perform SQL-based business analysis
 
-**Q.1: What are the different customer segments in the customers table, and how many customers belong to each segment?**
+**1: What are the different customer segments in the customers table, and how many customers belong to each segment?**
 
 ```sql
 SELECT 
@@ -329,7 +343,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 ```
 
-**Q.2: Find all customers whose city contains the word "stan"**
+**2: Find all customers whose city contains the word "stan"**
 
 ```sql
 SELECT * 
@@ -337,7 +351,7 @@ FROM customers
 WHERE city ILIKE '%stan%';
 ```
 
-**Q.3: Which cities have more than one customer?**
+**3: Which cities have more than one customer?**
 
 ```sql
 SELECT
@@ -349,7 +363,7 @@ HAVING COUNT (*) > 1
 ORDER BY 2 DESC;
 ```
 
-**Q.4: How many products are there in each product category?**
+**4: How many products are there in each product category?**
 
 ```sql
 SELECT 
@@ -360,7 +374,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 ```
 
-**Q.5: What are the minimum, maximum, and average product prices?**
+**5: What are the minimum, maximum, and average product prices?**
 
 ```sql
 SELECT 
@@ -370,7 +384,7 @@ SELECT
 FROM order_details;
 ```
 
-**Q.6:  Which products have a price greater than 10?**
+**6:  Which products have a price greater than 10?**
 
 ```sql
 SELECT productid
@@ -378,7 +392,7 @@ FROM order_details
 WHERE unitprice > 10;
 ```
 
-**Q.7: How many orders were placed on each order date?**
+**7: How many orders were placed on each order date?**
 
 ```sql
 SELECT 
@@ -389,7 +403,7 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
-**Q.8: What is the earliest and latest order date in the dataset?**
+**8: What is the earliest and latest order date in the dataset?**
 
 ```sql
 SELECT 
@@ -398,7 +412,7 @@ SELECT
 FROM orders;
 ```
 
-**Q.9: What are the minimum, maximum, and average quantities ordered?**
+**9: What are the minimum, maximum, and average quantities ordered?**
 
 ```sql
 SELECT 
@@ -408,7 +422,7 @@ SELECT
 FROM order_details;
 ```
 
-**Q.10: How many order-detail records are marked as returned versus not returned?**
+**10: How many order-detail records are marked as returned versus not returned?**
 
 ```sql
 SELECT 
@@ -419,7 +433,7 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
-**Q.11: List each product together with its category name**
+**11: List each product together with its category name**
 
 ```sql
 SELECT 
@@ -431,7 +445,7 @@ JOIN categories as c
 ON c.categoryid = p.categoryid;
 ```
 
-**Q.12: For each order, show the order ID, customer ID, city, region, and customer segment**
+**12: For each order, show the order ID, customer ID, city, region, and customer segment**
 
 ```sql
 SELECT 
@@ -445,7 +459,7 @@ JOIN customers as cs
 ON o.customerid = cs.customerid;
 ```
 
-**Q.13: For each product, show its product name, category name, and the total quantity sold***
+**13: For each product, show its product name, category name, and the total quantity sold***
 
 ```sql
 SELECT 
@@ -461,7 +475,7 @@ ON p.productid = od.productid
 GROUP BY 1, 2, 3;
 ```
 
-**Q.14: List all customers and show the number of orders each customer has placed**
+**14: List all customers and show the number of orders each customer has placed**
 
 ```sql
 SELECT 
@@ -477,7 +491,7 @@ GROUP BY 1, 2, 3, 4
 ORDER BY 5 DESC;
 ```
 
-**Q.15: Which products have a price higher than the average price of all products?**
+**15: Which products have a price higher than the average price of all products?**
 
 ```sql
 SELECT DISTINCT
@@ -491,7 +505,7 @@ WHERE od.unitprice > (SELECT AVG(unitprice) FROM order_details)
 ORDER BY 3 DESC;
 ```
 
-**Q.16: Which cities have more than one customer who signed up 
+**16: Which cities have more than one customer who signed up 
 within the last 180 days of the latest signup date?**
 
 ```sql
@@ -505,7 +519,7 @@ HAVING COUNT (customerid) > 1
 ORDER BY 2 DESC;
 ```
 
-**Q.17: How many orders were placed in each year?**
+**17: How many orders were placed in each year?**
 
 ```sql
 SELECT 
@@ -516,7 +530,7 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
-**Q.18: Rank products from highest to lowest based on the total quantity sold**
+**18: Rank products from highest to lowest based on the total quantity sold**
 
 ```sql
 SELECT 
@@ -531,7 +545,7 @@ GROUP BY 1, 2
 ORDER BY rank;
 ```
 
-**Q.19: Which customers have placed more than five orders?**
+**19: Which customers have placed more than five orders?**
 
 ```sql
 WITH customer_orders
@@ -558,7 +572,7 @@ FROM customer_orders
 WHERE order_count > 5;
 ```
 
-**Q.20: Using a subquery, identify customers who are from Aegean and have placed more than five orders**
+**20: Using a subquery, identify customers who are from Aegean and have placed more than five orders**
 
 ```sql
 SELECT 
@@ -582,38 +596,25 @@ HAVING COUNT(orderid) > 5
 ORDER BY total_orders DESC;
 ```
 
-## 🛠️ Technologies
+## Findings
 
-- PostgreSQL
-- SQL
-- pgAdmin
-- Git
-- GitHub
-
-## SQL Techniques Demonstrated
-
-| Technique | Example use |
-|---|---|
-| `WHERE` / `ILIKE` | Filtering records and text search |
-| `COUNT()` | Counting customers, products, and orders |
-| `MIN()` / `MAX()` | Dates, prices, and quantities |
-| `AVG()` | Average price and quantity |
-| `GROUP BY` | Aggregating by customer, city, category, and date |
-| `HAVING` | Filtering grouped results |
-| `INNER JOIN` | Combining related tables |
-| `LEFT JOIN` | Keeping all customers while counting orders |
-| Subqueries | Average price and signup-date analysis |
-| CTE | Customer order-count analysis |
-| `EXTRACT()` | Orders by year |
-| `RANK()` | Product ranking |
-| `UPDATE` | Data cleaning |
+- **Customer Purchasing patterns**:  Identified customers with multiple orders and examined repeat purchasing behavior.
+- **Sales Performance**: Identified sales trends and the products/categories contributing most to overall revenue.
+- **Customer distribution**: Analyzed customers by city to identify areas with higher customer concentrations.
+- **Order and return behaviour**: Examined order activity and return patterns to identify notable trends in customer transactions.
 
 ## Reports
+
+- **Sales Performance Report**: Summary of revenue, orders, and sales trends.
+- **Customer Analysis Report**: Overview of customer activity, repeat customers, and geographic distribution.
+- **Product Performance Report**: Analysis of product/category sales and revenue contribution.
+- **Returns Analysis Report**: Summary of returned orders and return patterns.
 
 ## Conclusion
 
 This project demonstrates an end-to-end PostgreSQL workflow from relational database design through data-quality investigation, cleaning, validation, and business-oriented SQL analysis.
 
+## 👤 Author - Dickson Maketa
 
 ##  Get in touch!
 
@@ -621,12 +622,6 @@ This project demonstrates an end-to-end PostgreSQL workflow from relational data
 **Email:** makettadickson@gmail.com  
 **Phone:** +255 755 660 020
 
-
-## 👤 Author 
-
-**Dickson Maketa**
-
 [GitHub Profile](https://github.com/maketadickson)
 
-
-Thank you for your interest in this project!
+Thank you for your support, and I look forward to connecting with you!
