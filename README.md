@@ -2,8 +2,7 @@
 
 ##  Project Overview  
 
-**Project Title:** Retail Sales & Customer Analytics
-
+**Project Title:** Retail Sales & Customer Analytics  
 **Database:** retail_analytics_p1
 
 This project demonstrates the Retail Sales and Customer Analytics using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase skills in database design, manipulation, and querying.
