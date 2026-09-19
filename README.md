@@ -10,7 +10,7 @@ This project uses a retail dataset containing five related tables: `customers`, 
 
 The workflow covers:
 
-**Database Design → Data Exploration → Data Quality Checks → Data Cleaning → Validation → Business Analysis**
+**Database Design → Data Exploration → Data Quality Checks → Data Cleaning → Data Validation → Business Analysis**
 
 The project demonstrates practical PostgreSQL skills including `JOIN`s, `LEFT JOIN`, aggregation, `HAVING`, subqueries, CTEs, date intervals, `EXTRACT()`, window functions, and `RANK()`.
 
