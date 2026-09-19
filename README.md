@@ -293,7 +293,7 @@ WHERE
 	isreturned = 0
 ```
 
- ### 4. Validate the database and cleaned data
+ ### 4. Data Validation
 
 ```sql
 SELECT COUNT (*)
@@ -318,7 +318,7 @@ WHERE
 	returntime IS NOT NULL;
 ```
 
-### 5. Perform SQL-based business analysis
+### 5. SQL-based business analysis
 
 **Task 1: What are the different customer segments in the customers table, and how many customers belong to each segment?**
 
