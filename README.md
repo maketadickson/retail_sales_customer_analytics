@@ -100,7 +100,7 @@ CREATE TABLE order_details
 
 ### 2. Data Exploration & Quality checks
 
-**Row counts**
+- **Row counts**
 
 ```sql
 SELECT	COUNT (*) 
@@ -119,7 +119,7 @@ SELECT	COUNT (*)
 FROM 	products;
 ```
 
-**NULL values**
+- **NULL values**
 ```sql
 SELECT * FROM categories
 WHERE 
@@ -184,7 +184,7 @@ WHERE
 	categoryid IS NULL;
 ```
 
-**Duplicates**
+- **Duplicates**
 ```sql
 SELECT categoryid,
 	COUNT(*)
@@ -217,7 +217,7 @@ GROUP BY productid
 HAVING COUNT (*) > 1;
 ```
 
-**Invalid date values**
+- **Invalid date values**
 ```sql
 SELECT
 	MIN(signupdate) as earliest_date,
@@ -235,7 +235,7 @@ SELECT
 FROM orders;
 ```
 
-**Invalid time values**
+- **Invalid time values**
 ```sql
 SELECT 
 	MIN(returntime) as shortest_time,
