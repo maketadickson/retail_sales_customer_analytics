@@ -21,7 +21,7 @@ The data for this project is sourced from the Kaggle dataset:
 
 ## Project Structure
 
-### 1.Database Setup
+### 1. Database Setup
 
 ![Database ERD](ERD.png)
 
