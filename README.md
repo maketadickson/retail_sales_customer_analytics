@@ -320,7 +320,7 @@ WHERE
 
 ### 5. Perform SQL-based business analysis
 
-**1: What are the different customer segments in the customers table, and how many customers belong to each segment?**
+**Task 1: What are the different customer segments in the customers table, and how many customers belong to each segment?**
 
 ```sql
 SELECT 
@@ -331,7 +331,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 ```
 
-**2: Find all customers whose city contains the word "stan"**
+**Task 2: Find all customers whose city contains the word "stan"**
 
 ```sql
 SELECT * 
@@ -339,7 +339,7 @@ FROM customers
 WHERE city ILIKE '%stan%';
 ```
 
-**3: Which cities have more than one customer?**
+**Task 3: Which cities have more than one customer?**
 
 ```sql
 SELECT
@@ -351,7 +351,7 @@ HAVING COUNT (*) > 1
 ORDER BY 2 DESC;
 ```
 
-**4: How many products are there in each product category?**
+**Task 4: How many products are there in each product category?**
 
 ```sql
 SELECT 
@@ -362,7 +362,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 ```
 
-**5: What are the minimum, maximum, and average product prices?**
+**Task 5: What are the minimum, maximum, and average product prices?**
 
 ```sql
 SELECT 
@@ -372,7 +372,7 @@ SELECT
 FROM order_details;
 ```
 
-**6:  Which products have a price greater than 10?**
+**Task 6:  Which products have a price greater than 10?**
 
 ```sql
 SELECT productid
@@ -380,7 +380,7 @@ FROM order_details
 WHERE unitprice > 10;
 ```
 
-**7: How many orders were placed on each order date?**
+**Task 7: How many orders were placed on each order date?**
 
 ```sql
 SELECT 
@@ -391,7 +391,7 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
-**8: What is the earliest and latest order date in the dataset?**
+**Task 8: What is the earliest and latest order date in the dataset?**
 
 ```sql
 SELECT 
@@ -400,7 +400,7 @@ SELECT
 FROM orders;
 ```
 
-**9: What are the minimum, maximum, and average quantities ordered?**
+**Task 9: What are the minimum, maximum, and average quantities ordered?**
 
 ```sql
 SELECT 
@@ -410,7 +410,7 @@ SELECT
 FROM order_details;
 ```
 
-**10: How many order-detail records are marked as returned versus not returned?**
+**Task 10: How many order-detail records are marked as returned versus not returned?**
 
 ```sql
 SELECT 
@@ -421,7 +421,7 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
-**11: List each product together with its category name**
+**Task 11: List each product together with its category name**
 
 ```sql
 SELECT 
@@ -433,7 +433,7 @@ JOIN categories as c
 ON c.categoryid = p.categoryid;
 ```
 
-**12: For each order, show the order ID, customer ID, city, region, and customer segment**
+**Task 12: For each order, show the order ID, customer ID, city, region, and customer segment**
 
 ```sql
 SELECT 
@@ -447,7 +447,7 @@ JOIN customers as cs
 ON o.customerid = cs.customerid;
 ```
 
-**13: For each product, show its product name, category name, and the total quantity sold***
+**Task 13: For each product, show its product name, category name, and the total quantity sold***
 
 ```sql
 SELECT 
@@ -463,7 +463,7 @@ ON p.productid = od.productid
 GROUP BY 1, 2, 3;
 ```
 
-**14: List all customers and show the number of orders each customer has placed**
+**Task 14: List all customers and show the number of orders each customer has placed**
 
 ```sql
 SELECT 
@@ -479,7 +479,7 @@ GROUP BY 1, 2, 3, 4
 ORDER BY 5 DESC;
 ```
 
-**15: Which products have a price higher than the average price of all products?**
+**Task 15: Which products have a price higher than the average price of all products?**
 
 ```sql
 SELECT DISTINCT
@@ -493,7 +493,7 @@ WHERE od.unitprice > (SELECT AVG(unitprice) FROM order_details)
 ORDER BY 3 DESC;
 ```
 
-**16: Which cities have more than one customer who signed up 
+**Task 16: Which cities have more than one customer who signed up 
 within the last 180 days of the latest signup date?**
 
 ```sql
@@ -507,7 +507,7 @@ HAVING COUNT (customerid) > 1
 ORDER BY 2 DESC;
 ```
 
-**17: How many orders were placed in each year?**
+**Task 17: How many orders were placed in each year?**
 
 ```sql
 SELECT 
@@ -518,7 +518,7 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
-**18: Rank products from highest to lowest based on the total quantity sold**
+**Task 18: Rank products from highest to lowest based on the total quantity sold**
 
 ```sql
 SELECT 
@@ -533,7 +533,7 @@ GROUP BY 1, 2
 ORDER BY rank;
 ```
 
-**19: Which customers have placed more than five orders?**
+**Task 19: Which customers have placed more than five orders?**
 
 ```sql
 WITH customer_orders
@@ -560,7 +560,7 @@ FROM customer_orders
 WHERE order_count > 5;
 ```
 
-**20: Using a subquery, identify customers who are from Aegean and have placed more than five orders**
+**Task 20: Using a subquery, identify customers who are from Aegean and have placed more than five orders**
 
 ```sql
 SELECT 
