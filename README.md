@@ -21,7 +21,7 @@ This project demonstrates the Retail Sales and Customer Analytics using SQL. It 
 
 ### 1.Database Setup
 
-![Database ERD](sql-page_2.PNG)
+![Database ERD](https://github.com/maketadickson/retail_sales_customer_analytics/blob/main/sql-page_2.PNG)
 
 | Table | Purpose |
 |---|---|
