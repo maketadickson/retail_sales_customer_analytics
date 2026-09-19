@@ -1,6 +1,6 @@
 # Retail Sales & Customer Analytics with PostgreSQL
 
-![Project Cover](images/project-cover.png)
+![Project Cover](file_000000004d3c820e83f8260a70f1287d.png)
 
 A PostgreSQL-based retail analytics project focused on data exploration, data quality checks, data cleaning, relational database design, and SQL-based business analysis.
 
