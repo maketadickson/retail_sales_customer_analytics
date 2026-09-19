@@ -13,7 +13,7 @@ This project focuses on analysing sales and customer data using SQL. It includes
 
 - PostgreSQL
 - SQL
-- pgAdmin
+- pgAdmin 4
 - Git
 - GitHub
 
