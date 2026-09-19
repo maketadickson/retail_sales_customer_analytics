@@ -2,26 +2,8 @@
 
 ![Project Cover](file_000000004d3c820e83f8260a70f1287d.png)
 
-##  Project Overview  
-
-**Project Title:** Retail Sales & Customer Analytics  
-**Database:** `retail_analytics_p1`
-
+## Overview  
 This project focuses on analysing sales and customer data using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase skills in database design, data manipulation, and SQL querying.
-
-## Technologies
-
-- PostgreSQL
-- SQL
-- pgAdmin 4
-- Git
-- GitHub
-
-## Dataset
-
-The data for this project is sourced from Kaggle dataset:
-
-- Dataset Link: [](https://www.kaggle.com/datasets/hyerdrac/retail-data)
   
 ## Objectives
 
@@ -30,6 +12,12 @@ The data for this project is sourced from Kaggle dataset:
 - Data Cleaning: Perform a detailed data cleaning for any data quality issue found.
 - Validate the database and cleaned data: Verify the relationships, data consistency, and the results of the cleaning process.
 - Perform SQL-based business analysis: Use queries, joins, aggregations, subqueries, CTEs, and window functions to answer business questions and generate insights.
+
+## Dataset
+
+The data for this project is sourced from the Kaggle dataset:
+
+- **Dataset Link:** [Retail Dataset](https://www.kaggle.com/datasets/hyerdrac/retail-data)
 
 ## Project Structure
 
