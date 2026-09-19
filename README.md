@@ -602,7 +602,7 @@ ORDER BY total_orders DESC;
 
 This project demonstrates an end-to-end PostgreSQL workflow from relational database design through data-quality investigation, cleaning, validation, and business-oriented SQL analysis.
 
-## 👤 Author - Dickson Maketa
+## Author - Dickson Maketa
 
 ##  Get in touch!
 
