@@ -3,7 +3,7 @@
 ##  Project Overview  
 
 **Project Title:** Retail Sales & Customer Analytics  
-**Database:** retail_analytics_p1
+**Database:** `retail_analytics_p1`
 
 This project demonstrates the Retail Sales and Customer Analytics using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase skills in database design, manipulation, and querying.
 
@@ -23,45 +23,555 @@ This project demonstrates the Retail Sales and Customer Analytics using SQL. It 
 
 ![Database ERD](ERD.png)
 
-| Table | Purpose |
-|---|---|
-| `customers` | Customer demographic and segmentation information |
-| `orders` | Order-level information |
-| `order_details` | Product-level details for each order |
-| `products` | Product information |
-| `categories` | Product category information |
+- **Database Creation**: Created a database named `retail_analytics_p1` .
+- **Table Creation**: Created tables for categories, customers, order_details, orders, and products. Each table includes relevant columns and relationships.
 
-### Main columns
+```sql
+CREATE DATABASE retail_analytics_p1;
 
-**Customers:** `customerid`, `gender`, `age`, `city`, `region`, `customersegment`, `signupdate`
+CREATE TABLE categories
+(
+		    CategoryID VARCHAR(15) PRIMARY KEY,
+		    CategoryName VARCHAR(25)
+);
 
-**Orders:** `orderid`, `customerid`, `orderdate`, `ordertime`
 
-**Order Details:** `orderid`, `productid`, `quantity`, `unitcost`, `unitprice`, `discountrate`, `isreturned`, `returndate`, `returntime`, `returnreason`
+CREATE TABLE products
+(	
+            ProductID VARCHAR (15) PRIMARY KEY, 
+		    ProductName	VARCHAR (50),
+		    CategoryID VARCHAR (15)
+            FOREIGN KEY (categoryid) REFERENCES categories (categoryid)
+);
 
-**Products:** `productid`, `productname`, `categoryid`
 
-**Categories:** `categoryid`, `categoryname`
+CREATE TABLE customers
+(	
+		    CustomerID VARCHAR (15) PRIMARY KEY,
+		    Gender VARCHAR (10),	
+		    Age	INT,
+		    City VARCHAR (15),	
+		    Region VARCHAR (25),
+		    CustomerSegment	VARCHAR (15),
+		    SignUpDate DATE
+);
 
-## 🏗️ Database Design
 
-The database contains five related tables.
+CREATE TABLE orders
+(	
+		    OrderID VARCHAR (15) PRIMARY KEY, 
+		    CustomerID VARCHAR (15),  
+		    OrderDate DATE,	
+		    OrderTime TIME
+            FOREIGN KEY (customerid) REFERENCES customers (customerid)
+);
 
-Relationships:
 
-- `categories` → `products`
-- `products` → `order_details`
-- `customers` → `orders`
-- `orders` → `order_details`
-- `products` → `order_details`
+CREATE TABLE order_details
+(	
+		    OrderID VARCHAR (15), 
+		    ProductID VARCHAR (15), 
+		    Quantity INT,	
+		    UnitCost NUMERIC, 	
+		    UnitPrice NUMERIC,	
+		    DiscountRate NUMERIC,	
+		    IsReturned INT,	
+		    ReturnDate DATE,	
+		    ReturnTime TIME,	
+		    ReturnReason VARCHAR (50),
+		
+		    PRIMARY KEY (OrderID, ProductID)
+            FOREIGN KEY (orderid) REFERENCES orders (orderid),
+            FOREIGN KEY (productid) REFERENCES products (productid)
+);
 
-Primary and foreign keys were defined during table creation. `products.categoryid` references `categories.categoryid`, `orders.customerid` references `customers.customerid`, and `order_details` references both `orders` and `products`. fileciteturn1file1L54-L74
+```
 
-### ERD
+### 2. Data Exploration & Quality checks
 
-![Database ERD](images/database-schema.png)
+**ROW COUNTS**
 
-> Export the pgAdmin ERD as a PNG and save it as `images/database-schema.png` so it displays directly on GitHub.
+```sql
+SELECT	COUNT (*) 
+FROM 	categories;
+
+SELECT	COUNT (*) 
+FROM 	customers;
+
+SELECT	COUNT (*) 
+FROM 	order_details;
+
+SELECT	COUNT (*) 
+FROM 	orders;
+
+SELECT	COUNT (*) 
+FROM 	products;
+```
+
+**NULL VALUES**
+```sql
+SELECT * FROM categories
+WHERE 
+	categoryid IS NULL 
+	OR
+	categoryname IS NULL;
+
+SELECT * FROM customers 
+WHERE
+	customerid IS NULL
+	OR
+	gender IS NULL
+	OR
+	age IS NULL
+	OR
+	city IS NULL
+	OR
+	region IS NULL
+	OR
+	customersegment IS NULL
+	OR
+	signupdate IS NULL;
+
+SELECT * FROM order_details
+WHERE 
+	orderid IS NULL
+	OR
+	productid IS NULL
+	OR
+	quantity IS NULL
+	OR
+	unitcost IS NULL
+	OR
+	unitprice IS NULL
+	OR
+	discountrate IS NULL
+	OR 
+	isreturned IS NULL
+	OR
+	returndate IS NULL
+	OR 
+	returntime IS NULL
+	OR
+	returnreason IS NULL;
+
+SELECT * FROM orders
+WHERE 
+	orderid IS NULL
+	OR
+	customerid IS NULL
+	OR
+	orderdate IS NULL
+	OR
+	ordertime IS NULL;
+
+SELECT * FROM products
+WHERE
+	productid IS NULL
+	OR
+	productname IS NULL
+	OR
+	categoryid IS NULL;
+```
+
+**DUPLICATES**
+```sql
+SELECT categoryid,
+	COUNT(*)
+FROM categories
+GROUP BY categoryid
+HAVING COUNT (*) > 1;
+
+SELECT customerid,
+	COUNT(*)
+FROM customers
+GROUP BY customerid
+HAVING COUNT (*) > 1;
+
+SELECT orderid, productid,
+	COUNT(*)
+FROM order_details
+GROUP BY orderid, productid
+HAVING COUNT (*) > 1;
+
+SELECT orderid,
+	COUNT(*)
+FROM orders
+GROUP BY orderid
+HAVING COUNT (*) > 1;
+
+SELECT productid,
+	COUNT(*)
+FROM products
+GROUP BY productid
+HAVING COUNT (*) > 1;
+```
+
+**INVALID DATE VALUES**
+```sql
+SELECT
+	MIN(signupdate) as earliest_date,
+	MAX(signupdate) as latest_date
+FROM customers;
+
+SELECT
+	MIN(returndate) as earliest_date,
+	MAX(returndate) as latest_date 
+FROM order_details;
+
+SELECT
+	MIN(orderdate),
+	MAX(orderdate)
+FROM orders;
+```
+
+**INVALID TIME VALUES**
+```sql
+SELECT 
+	MIN(returntime) as shortest_time,
+	MAX(returntime) as longest_time
+FROM order_details; 
+```
+
+### 3. Data Cleaning
+
+```sql
+SELECT
+	returndate,
+	isreturned,
+	COUNT(*) as records
+	FROM order_details
+	GROUP BY 1, 2
+	ORDER BY 1 DESC;
+
+SELECT * 
+FROM order_details
+WHERE 
+	returndate = '9999-12-31'
+	AND 
+	returntime = '00:00:00'
+LIMIT 20;
+
+UPDATE order_details
+SET returndate = 	NULL 
+WHERE 
+	returndate = '9999-12-31'
+	AND
+	isreturned = 0;
+
+SELECT 
+	returntime,
+	isreturned,
+	COUNT(*) as records
+	FROM order_details
+	GROUP BY 1, 2
+	ORDER BY 1 ASC;
+
+SELECT *
+FROM order_details
+WHERE
+	returntime = '00:00:00'
+	AND
+	isreturned = 0
+	LIMIT 20;
+
+UPDATE order_details
+SET returntime = NULL 
+WHERE 
+	returntime = '00:00:00'
+	AND
+	isreturned = 0
+```
+
+ ### 4. Validate the database and cleaned data
+
+```sql
+SELECT COUNT (*)
+FROM order_details
+WHERE returndate = '9999-12-31';
+
+SELECT COUNT (*)
+FROM order_details
+WHERE returntime = '00:00:00';
+
+SELECT COUNT (*)
+FROM order_details
+WHERE isreturned = 0
+	AND 
+	returndate IS NOT NULL;
+
+SELECT COUNT (*)
+FROM order_details
+WHERE 
+	isreturned = 0
+	AND 
+	returntime IS NOT NULL;
+```
+
+### 5. Perform SQL-based business analysis
+
+**Q.1: What are the different customer segments in the customers table, and how many customers belong to each segment?**
+
+```sql
+SELECT 
+	customersegment,
+	COUNT (*) as customer_count
+FROM customers
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+
+**Q.2: Find all customers whose city contains the word "stan"**
+
+```sql
+SELECT * 
+FROM customers
+WHERE city ILIKE '%stan%';
+```
+
+**Q.3: Which cities have more than one customer?**
+
+```sql
+SELECT
+	city,
+	COUNT (*) as customer_count
+FROM customers
+GROUP BY 1
+HAVING COUNT (*) > 1
+ORDER BY 2 DESC;
+```
+
+**Q.4: How many products are there in each product category?**
+
+```sql
+SELECT 
+	categoryid,
+	COUNT(*) as product_count
+FROM products
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+
+**Q.5: What are the minimum, maximum, and average product prices?**
+
+```sql
+SELECT 
+	MIN(unitprice) as minimum_price,
+	MAX(unitprice) as maximum_price,
+	ROUND(AVG(unitprice), 2) as avg_price
+FROM order_details;
+```
+
+**Q.6:  Which products have a price greater than 10?**
+
+```sql
+SELECT productid
+FROM order_details
+WHERE unitprice > 10;
+```
+
+**Q.7: How many orders were placed on each order date?**
+
+```sql
+SELECT 
+	orderdate,
+	COUNT(*) as total_orders
+FROM orders
+GROUP BY 1
+ORDER BY 1;
+```
+
+**Q.8: What is the earliest and latest order date in the dataset?**
+
+```sql
+SELECT 
+	MIN(orderdate) as earliest_date,
+	MAX(orderdate) as latest_date
+FROM orders;
+```
+
+**Q.9: What are the minimum, maximum, and average quantities ordered?**
+
+```sql
+SELECT 
+	MIN(quantity) as min_qty_ordered,
+	MAX(quantity) as max_qty_ordered,
+	ROUND(AVG(quantity), 2) as avg_qty_orderd
+FROM order_details;
+```
+
+**Q.10: How many order-detail records are marked as returned versus not returned?**
+
+```sql
+SELECT 
+	isreturned,
+	COUNT(*) as record_count
+FROM order_details
+GROUP BY 1
+ORDER BY 1;
+```
+
+**Q.11: List each product together with its category name**
+
+```sql
+SELECT 
+	p.productid,
+	p.productname,
+	c.categoryname
+FROM products as p
+JOIN categories as c
+ON c.categoryid = p.categoryid;
+```
+
+**Q.12: For each order, show the order ID, customer ID, city, region, and customer segment**
+
+```sql
+SELECT 
+	o.orderid,
+	o.customerid,
+	cs.city,
+	cs.region,
+	cs.customersegment
+FROM orders as o
+JOIN customers as cs
+ON o.customerid = cs.customerid;
+```
+
+**Q.13: For each product, show its product name, category name, and the total quantity sold***
+
+```sql
+SELECT 
+	p.productid,
+	p.productname,
+	c.categoryname,
+	SUM(od.quantity) as total_quantiy
+FROM products as p
+JOIN categories as c
+ON p.categoryid = c.categoryid
+JOIN order_details as od
+ON p.productid = od.productid
+GROUP BY 1, 2, 3;
+```
+
+**Q.14: List all customers and show the number of orders each customer has placed**
+
+```sql
+SELECT 
+	cs.customerid,
+	cs.city,
+	cs.region,
+	cs.customersegment,
+	COUNT(o.orderid) as total_orders
+FROM customers as cs
+LEFT JOIN orders as o
+ON cs.customerid = o.customerid
+GROUP BY 1, 2, 3, 4
+ORDER BY 5 DESC;
+```
+
+**Q.15: Which products have a price higher than the average price of all products?**
+
+```sql
+SELECT DISTINCT
+	p.productid,
+	p.productname,
+	od.unitprice
+FROM products as p
+JOIN order_details as od
+ON p.productid = od.productid
+WHERE od.unitprice > (SELECT AVG(unitprice) FROM order_details)
+ORDER BY 3 DESC;
+```
+
+**Q.16: Which cities have more than one customer who signed up 
+within the last 180 days of the latest signup date?**
+
+```sql
+SELECT 
+	city,
+	COUNT(customerid) as total_customers
+FROM customers
+	WHERE signupdate >= (SELECT MAX(signupdate) - INTERVAL '180 days' FROM customers)
+GROUP BY 1
+HAVING COUNT (customerid) > 1
+ORDER BY 2 DESC;
+```
+
+**Q.17: How many orders were placed in each year?**
+
+```sql
+SELECT 
+	EXTRACT (YEAR FROM orderdate) as order_year,
+	COUNT (*) as total_orders
+FROM orders
+GROUP BY 1
+ORDER BY 1;
+```
+
+**Q.18: Rank products from highest to lowest based on the total quantity sold**
+
+```sql
+SELECT 
+	p.productid,
+	p.productname,
+	SUM(od.quantity) as total_quantity_sold,
+	RANK() OVER (ORDER BY SUM(od.quantity) DESC) as rank
+FROM products as p
+JOIN order_details as od
+ON p.productid = od.productid
+GROUP BY 1, 2
+ORDER BY rank;
+```
+
+**Q.19: Which customers have placed more than five orders?**
+
+```sql
+WITH customer_orders
+AS
+(
+SELECT 
+	cs.customerid,
+	cs.city,
+	cs.region,
+	cs.customersegment,
+	COUNT(o.orderid) as order_count
+	FROM customers as cs
+	JOIN orders as o
+	ON cs.customerid = o.customerid
+GROUP BY 1, 2, 3, 4
+)
+SELECT 
+	customerid,
+	city,
+	region,
+	customersegment,
+	order_count
+FROM customer_orders
+WHERE order_count > 5;
+```
+
+**Q.20: Using a subquery, identify customers who are from Aegean and have placed more than five orders**
+
+```sql
+SELECT 
+	customerid, 
+	region, 
+	COUNT(orderid) as total_orders
+FROM (
+	SELECT 
+		cs.customerid,
+		cs.region, 
+		o.orderid
+    FROM customers as cs
+    JOIN orders as o
+        ON cs.customerid = o.customerid
+) AS customer_orders
+WHERE region = 'Aegean'
+GROUP BY 
+	customerid,
+	region
+HAVING COUNT(orderid) > 5
+ORDER BY total_orders DESC;
+```
 
 ## 🛠️ Technologies
 
@@ -71,75 +581,7 @@ Primary and foreign keys were defined during table creation. `products.categoryi
 - Git
 - GitHub
 
-## 🔍 Data Profiling & Quality Checks
-
-The project includes row-count checks, NULL checks, duplicate checks, and date/time validation. fileciteturn1file0L11-L25 fileciteturn1file0L29-L95
-
-Duplicate checks were performed across the five tables using grouping and `HAVING COUNT(*) > 1`. fileciteturn1file0L98-L132
-
-Minimum and maximum dates/times were also inspected to identify unusual values. fileciteturn1file0L135-L160
-
-## 🧹 Data Cleaning
-
-The profiling identified `9999-12-31` as a placeholder value for `returndate` on non-returned records. The cleaning process replaced it with `NULL` when `isreturned = 0`.
-
-Likewise, `00:00:00` was treated as a placeholder `returntime` for non-returned records and replaced with `NULL`. fileciteturn1file0L164-L210
-
-This makes the data more semantically meaningful:
-
-- Returned item → actual return date/time where available
-- Not returned → `NULL` return date/time
-
-## ✅ Data Validation
-
-After cleaning, validation queries check that:
-
-- `9999-12-31` no longer remains
-- `00:00:00` no longer remains
-- Non-returned records do not retain a return date
-- Non-returned records do not retain a return time fileciteturn1file0L214-L235
-
-## ❓ Business Questions & SQL Analysis
-
-### Customer Analysis
-
-1. What are the different customer segments and how many customers belong to each?
-2. Which customers have a city containing the word `"stan"`?
-3. Which cities have more than one customer?
-4. How many products are there in each product category?
-
-These questions demonstrate filtering, aggregation, `GROUP BY`, and `HAVING`. fileciteturn1file2L3-L41
-
-### Product Analysis
-
-5. What are the minimum, maximum, and average recorded unit prices?
-6. Which products have a price greater than 10?
-11. Which products belong to each category?
-13. What is the total quantity sold for each product?
-15. Which products have a price higher than the average recorded unit price?
-18. How can products be ranked from highest to lowest based on total quantity sold?
-
-The analysis uses aggregation, joins, a subquery, and the `RANK()` window function. fileciteturn1file2L43-L56 fileciteturn1file2L96-L104 fileciteturn1file2L122-L133 fileciteturn1file2L151-L161 fileciteturn1file2L189-L200
-
-### Order Analysis
-
-7. How many orders were placed on each order date?
-8. What is the earliest and latest order date?
-17. How many orders were placed in each year?
-
-These demonstrate aggregation, date functions, and `EXTRACT(YEAR FROM orderdate)`. fileciteturn1file2L59-L74 fileciteturn1file2L179-L187
-
-### Customer & Order Behavior
-
-12. For each order, what are the customer ID, city, region, and customer segment?
-14. How many orders has each customer placed?
-16. Which cities have more than one customer who signed up within 180 days of the latest signup date?
-19. Which customers have placed more than five orders?
-20. Which customers are from the Aegean region and have placed more than five orders?
-
-These questions demonstrate joins, `LEFT JOIN`, subqueries, CTEs, date intervals, grouping, and `HAVING`. fileciteturn1file2L107-L120 fileciteturn1file2L136-L175 fileciteturn1file2L203-L249
-
-## 🔎 SQL Techniques Demonstrated
+## SQL Techniques Demonstrated
 
 | Technique | Example use |
 |---|---|
@@ -157,72 +599,25 @@ These questions demonstrate joins, `LEFT JOIN`, subqueries, CTEs, date intervals
 | `RANK()` | Product ranking |
 | `UPDATE` | Data cleaning |
 
-## 📊 Key Findings
+## Reports
 
-The uploaded SQL files contain the analysis queries but not the resulting output values. Therefore, numerical findings should be added here only after running the final queries.
-
-- **Customer insight:** `[Add finding]`
-- **Product insight:** `[Add finding]`
-- **Order insight:** `[Add finding]`
-- **Return insight:** `[Add finding]`
-- **Regional/customer insight:** `[Add finding]`
-
-## 💡 Business Insights
-
-Add business interpretations supported by your actual query results.
-
-For example:
-
-- Which customer segments have the largest populations?
-- Which products have the highest quantities sold?
-- Which customers have unusually high order frequency?
-- What patterns appear in returns?
-- Which regions or cities show higher customer activity?
-
-Replace these prompts with conclusions supported by the actual SQL output.
-
-## 📁 Suggested GitHub Project Structure
-
-```text
-retail-sales-customer-analytics/
-│
-├── README.md
-│
-├── data/
-│   └── raw/
-│       ├── customers.csv
-│       ├── orders.csv
-│       ├── order_details.csv
-│       ├── products.csv
-│       └── categories.csv
-│
-├── sql/
-│   ├── 01_create_tables.sql
-│   ├── 02_data_profiling_cleaning_validation.sql
-│   └── 03_data_analysis.sql
-│
-├── images/
-│   ├── project-cover.png
-│   └── database-schema.png
-│
-└── erd/
-    └── retail_database.pgerd
-```
-
-## 📝 Conclusion
+## Conclusion
 
 This project demonstrates an end-to-end PostgreSQL workflow from relational database design through data-quality investigation, cleaning, validation, and business-oriented SQL analysis.
 
-## 📫 Contact
 
-**Name:** Your Name  
-**Email:** your.email@example.com  
-**Phone:** +255 XXX XXX XXX
+##  Get in touch!
 
-Replace these placeholders with your actual details before publishing.
+**Name:** Dickson Gaetan Maketa
+**Email:** makettadickson@gmail.com
+**Phone:** +255 755 660 020
 
-## 👤 Author
 
-**Your Name**
+## 👤 Author 
 
-[GitHub Profile](https://github.com/yourusername)
+**Dickson Maketa**
+
+[GitHub Profile](https://github.com/maketadickson)
+
+
+Thank you for your interest in this project!
