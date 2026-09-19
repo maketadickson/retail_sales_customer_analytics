@@ -29,6 +29,7 @@ This project demonstrates the Retail Sales and Customer Analytics using SQL. It 
 ```sql
 CREATE DATABASE retail_analytics_p1;
 
+-- create table "categories"
 CREATE TABLE categories
 (
 		    CategoryID VARCHAR(15) PRIMARY KEY,
@@ -36,6 +37,8 @@ CREATE TABLE categories
 );
 
 
+
+-- create table "products"
 CREATE TABLE products
 (	
             ProductID VARCHAR (15) PRIMARY KEY, 
@@ -45,6 +48,8 @@ CREATE TABLE products
 );
 
 
+
+-- create table "customers"
 CREATE TABLE customers
 (	
 		    CustomerID VARCHAR (15) PRIMARY KEY,
@@ -57,6 +62,8 @@ CREATE TABLE customers
 );
 
 
+
+-- create table "orders"
 CREATE TABLE orders
 (	
 		    OrderID VARCHAR (15) PRIMARY KEY, 
@@ -67,6 +74,8 @@ CREATE TABLE orders
 );
 
 
+
+-- create table "order_details"
 CREATE TABLE order_details
 (	
 		    OrderID VARCHAR (15), 
@@ -89,7 +98,7 @@ CREATE TABLE order_details
 
 ### 2. Data Exploration & Quality checks
 
-**ROW COUNTS**
+**Row counts**
 
 ```sql
 SELECT	COUNT (*) 
@@ -108,7 +117,7 @@ SELECT	COUNT (*)
 FROM 	products;
 ```
 
-**NULL VALUES**
+**NULL values**
 ```sql
 SELECT * FROM categories
 WHERE 
@@ -173,7 +182,7 @@ WHERE
 	categoryid IS NULL;
 ```
 
-**DUPLICATES**
+**Duplicates**
 ```sql
 SELECT categoryid,
 	COUNT(*)
@@ -206,7 +215,7 @@ GROUP BY productid
 HAVING COUNT (*) > 1;
 ```
 
-**INVALID DATE VALUES**
+**Invalid date values**
 ```sql
 SELECT
 	MIN(signupdate) as earliest_date,
@@ -224,7 +233,7 @@ SELECT
 FROM orders;
 ```
 
-**INVALID TIME VALUES**
+**Invalid time values**
 ```sql
 SELECT 
 	MIN(returntime) as shortest_time,
@@ -608,8 +617,8 @@ This project demonstrates an end-to-end PostgreSQL workflow from relational data
 
 ##  Get in touch!
 
-**Name:** Dickson Gaetan Maketa
-**Email:** makettadickson@gmail.com
+**Name:** Dickson Gaetan Maketa  
+**Email:** makettadickson@gmail.com  
 **Phone:** +255 755 660 020
 
 
