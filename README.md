@@ -1,6 +1,8 @@
 # Retail Sales & Customer Analytics with PostgreSQL
 
-##  Project Overview  **Project Title:** Retail Sales & Customer Analytics
+##  Project Overview  
+
+**Project Title:** Retail Sales & Customer Analytics
 
 **Database:** retail_analytics_p1
 
