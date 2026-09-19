@@ -1,38 +1,27 @@
 # Retail Sales & Customer Analytics with PostgreSQL
 
+##  Project Overview
+
+** Project Title:** Retail Sales & Customer Analytics
+** Database:** retail_analytics_p1
+
+This project demonstrates the Retail Sales and Customer Analytics using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase skills in database design, manipulation, and querying.
+
 ![Project Cover](file_000000004d3c820e83f8260a70f1287d.png)
 
-A PostgreSQL-based retail analytics project focused on data exploration, data quality checks, data cleaning, relational database design, and SQL-based business analysis.
+## Objectives
 
-## 📌 Project Overview
+1. Create and structure the PostgreSQL database: Design the tables, Define the appropiate data types, primary keys, and foreign key relationships.
+2. Data Exploration & Quality checks: Explore the data and inspect the data quality to see if there is any data to clean.
+3. Data Cleaning: Perform a detailed data cleaning for any data quality issue found.
+4. Validate the database and cleaned data: Verify the relationships, data consistency, and the results of the cleaning process.
+5. Perform SQL-based business analysis: Use queries, joins, aggregations, subqueries, CTEs, and window functions to answer business questions and generate insights.
 
-This project uses a retail dataset containing five related tables: `customers`, `orders`, `order_details`, `products`, and `categories`.
+## Project Structure
 
-The workflow covers:
+### 1.Database Setup
 
-**Database Design → Data Exploration → Data Quality Checks → Data Cleaning → Data Validation → Business Analysis**
-
-The project demonstrates practical PostgreSQL skills including `JOIN`s, `LEFT JOIN`, aggregation, `HAVING`, subqueries, CTEs, date intervals, `EXTRACT()`, window functions, and `RANK()`.
-
-## 🎯 Business Objectives
-
-The analysis explores:
-
-- Customer segments and customer distribution
-- Customer locations
-- Product and category distribution
-- Order activity over time
-- Product pricing
-- Product quantities sold
-- Customer ordering behavior
-- Product rankings
-- Returned and non-returned records
-- Customers with higher order activity
-- Regional customer behavior
-
-## 📂 Dataset
-
-### Tables
+![Database ERD]()
 
 | Table | Purpose |
 |---|---|
