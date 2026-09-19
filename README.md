@@ -3,7 +3,7 @@
 ![Project Cover](file_000000004d3c820e83f8260a70f1287d.png)
 
 ## Overview  
-This project focuses on analysing sales and customer data using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase skills in database design, data manipulation, and SQL querying.
+This project focuses on analysing sales and customer data using SQL. It includes relational database design, data exploration, data quality checks, data cleaning, and SQL-based business analysis. The goal is to showcase the expertise in database design, data manipulation, data extraction, data cleaning and SQL querying.
   
 ## Objectives
 
